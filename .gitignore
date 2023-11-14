@@ -1,2 +1,5 @@
 # Ignore CherryTree backup saves
 *.ctb~*
+
+# Ignore python test file
+test.py
