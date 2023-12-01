@@ -2,7 +2,7 @@
 *.ctb~*
 
 # Ignore python test file
-CyberSecStudy/Python/Advent_of_codes/test.py
+Python/Advent_of_codes/test.py
 
 # Ignore puzzle inputs
-CyberSecStudy/Python/Advent_of_codes/**/*.txt
+Python/Advent_of_codes/**/*.txt
