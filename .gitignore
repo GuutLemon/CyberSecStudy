@@ -3,3 +3,6 @@
 
 # Ignore python test file
 test.py
+
+# Ignore puzzle inputs
+day*.txt
