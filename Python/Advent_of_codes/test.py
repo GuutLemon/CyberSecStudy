@@ -1,2 +1,0 @@
-
-print("ccat" in "cat")
