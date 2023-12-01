@@ -6,3 +6,5 @@ Python/Advent_of_codes/test.py
 
 # Ignore puzzle inputs
 Python/Advent_of_codes/**/*.txt
+
+Python/
