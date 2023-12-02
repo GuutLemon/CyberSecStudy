@@ -5,10 +5,7 @@ num_lists = [[i for i in j if i.isdigit()] for j in read_data]
 
 values = []
 for l in num_lists:
-    if len(l) == 1:
-        values.append(int(l[0]*2))
-    elif len(l) != 0:
-        values.append(int(l[0] + l[-1]))
+    values.append(int(l[0] + l[-1]))
 print("Part 1:", sum(values))
 
 
@@ -74,9 +71,6 @@ def line_check(line):
 
 for l in read_data:
     result = list(line_check(l))
-    if len(result) == 1:
-        values.append(int(result[0] * 2))
-    else:
-        values.append(int(result[0] + result[-1]))
+    values.append(int(result[0] + result[-1]))
     # print(result, values)
 print("Part 2:", sum(values))
