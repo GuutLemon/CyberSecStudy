@@ -17,7 +17,7 @@ def map_winning_amount():      # {card_id: amount of winning numbers}
     for i in range(len(cards)):
         m = count_win_nums(cards[i])
         if m > 0:
-            m_dict[i] = count_win_nums(cards[i])
+            m_dict[i] = m
     return m_dict
 
 
