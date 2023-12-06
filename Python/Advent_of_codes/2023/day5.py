@@ -4,30 +4,29 @@ with open('day5.txt') as f:
     seed_map = [[[int(i) for i in j.split()] for j in k] for k in seed_map]
 
 
-def make_ranges():
+def make_to_map():
     props = []
     for prop in seed_map[1:]:
-        ranges = []
+        to_map = []
         for line in prop:
-            ranges.append([(range(line[1], line[1] + line[2]), range(line[0], line[0] + line[2]))])
-        props.append(ranges)
+            to_map.append((range(line[1], line[1] + line[2]), range(line[0], line[0] + line[2])))
+        props.append(to_map)
     return props
 
 
 seeds = seed_map[0][0]
-properties = make_ranges()
+properties = make_to_map()
 print(properties)
 
 
 def mapping(n, i=0):
     if i > len(properties) - 1:
         return n
-    for line in properties[i]:
-        for r in line:
-            if n in r[0]:
-                n = r[1][n - r[0][0]]
-                i += 1
-                return mapping(n, i)
+    for r in properties[i]:
+        if n in r[0]:
+            n = r[1][n - r[0][0]]
+            i += 1
+            return mapping(n, i)
     i += 1
     return mapping(n, i)
 
@@ -42,7 +41,7 @@ print(min(mapped_loc))
 seeds2 = [(seeds[i], seeds[i] + seeds[i + 1]) for i in range(0, len(seeds), 2)]
 # print(seeds2)
 
-# Crashed
+# Too slow and crashing
 # def mapping2(rn, i=0):
 #     # print(rn)
 #     if i > len(properties) - 1:
@@ -62,35 +61,39 @@ seeds2 = [(seeds[i], seeds[i] + seeds[i + 1]) for i in range(0, len(seeds), 2)]
 #                                     # Next time name mapping_part 2 or something more obvious
 
 
-def mapping_part2(ranges: list, i=0):
-    print(ranges)
-    if i > len(properties) - 1:
-        return ranges
-    next_ranges = []
-    for p in properties[i]:
-        for rn in ranges:
+def mapping_part2(to_map: list):
+    for p in properties:
+        next = []
+        # for tm in to_map:
+        while len(to_map) > 0:
+            # print(to_map)
+            s, e = to_map.pop()
+            # print(to_map)
+            # Remove mapped
+            # to_map.remove(tm)
             for r in p:
-                s, e = rn[0], rn[1]
                 overlapped_s = max(s, r[0].start)
                 overlapped_e = min(e, r[0].stop)
                 if overlapped_s < overlapped_e:
-                    next_ranges.append((overlapped_s + r[1][0] - r[0][0], overlapped_e + r[1][0] - r[0][0]))
-                    # Not matched
+                    next.append((overlapped_s + r[1][0] - r[0][0], overlapped_e + r[1][0] - r[0][0]))
+                    # Not overlapped part, add to mapping loop
                     if overlapped_s > s:
-                        next_ranges.append((s, overlapped_s))
+                        to_map.append((s, overlapped_s))
                     if overlapped_e < e:
-                        next_ranges.append((overlapped_e, e))
-            if rn == ranges[-1:]:
-                i += 1
-                return mapping_part2(next_ranges, i)
-
-        i += 1
-        return mapping_part2(ranges, i)
-
+                        to_map.append((overlapped_e, e))
+                    break
+            else:       # "else block is executed when the while loop condition becomes False."
+                        # So while len(to_map) > 0 always run at least twice because first loop is not False
+            # if len(to_map) == 0:  # while len(to_map) > 0 only runs once because the if line rechecks its condition -> wrong results
+            #     print('A')
+                next.append((s, e))
+                # print('B', next)      # Leaving debug lines for future revisits
+        to_map = next[:]
+    return to_map
 
 mapped_loc = []
 for s in seeds2:
     mapped_loc.append(mapping_part2([s]))
 results = [i for j in mapped_loc for i in j]
 print(results)
-print(sorted(results, key=lambda x: x[0])[0][0])
+print(min(results))
