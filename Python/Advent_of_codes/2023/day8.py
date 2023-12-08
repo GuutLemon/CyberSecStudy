@@ -34,12 +34,8 @@ def find_factors(number):
 
 ends_with_A = [i for i in network if i[-1] == 'A']
 steps_per_path = [count_steps(i) for i in ends_with_A]
-factors = {i: find_factors(i) for i in steps_per_path}
-# {20777: [79, 263], 19199: [73, 263], 18673: [71, 263], 16043: [61, 263], 12361: [47, 263], 15517: [59, 263]}
-# All have 1 prime number and 263
+factors_per_path = [find_factors(i) for i in steps_per_path]
+# [[79, 263], [73, 263], [71, 263], [61, 263], [47, 263], [59, 263]]
 # All paths end at the same time means finding a common factor for all these prime numbers and multiply it with 263
-common = list(factors.values())[0][1]
-result = 1
-for p in factors:
-    result *= factors[p][0]
-print('Part 2:', result * common)
+factors = set(i for j in factors_per_path for i in j)
+print('Part 2:', math.prod(factors))
