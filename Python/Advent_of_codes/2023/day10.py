@@ -21,8 +21,7 @@ class PipeLoop:
             ('|', 'down'): 'down',
         }
         self.start = self.find_start_point()
-        self.loop = {p[0]: p[1] for p in self.map_loop()}
-        self.replace_S()
+        self.loop = self.map_loop()
         self.enclosed = self.find_enclosed()
 
     def find_start_point(self):
@@ -46,27 +45,22 @@ class PipeLoop:
     def map_loop(self):
         current, d = self.from_start_point()
         (i, j) = current
-        loop = [(current, (self.map[i][j], d))]
+        loop = {current: (self.map[i][j], d)}
         while current != self.start:
             current, d = self.traversing(current, d)
             (i, j) = current
-            loop.append((current, (self.map[i][j], d)))
-        return loop
+            loop[current] = self.map[i][j], d
+        # Replace 'S'
+        else:
+            for p in ('L', 'F', '7', 'J', '|', '-'):
+                if (p, d) in self.pipe_directions:
+                    next_direction = self.pipe_directions[(p, d)]
+                    next_pipe = tuple(map(sum, zip(current, self.directions[next_direction])))
+                    if next_pipe == list(loop)[0]:
+                        loop[current] = (p, d)
+                        return loop
 
     # Part 2
-    # Need to do this from the start
-    def replace_S(self):
-        start = list(self.loop)[-1]
-        start_direction = self.loop[start][1]
-        for type in ('L', 'F', '7', 'J', '|', '-'):
-            if (type, start_direction) in self.pipe_directions:
-                next_direction = self.pipe_directions[(type, start_direction)]
-                next_pipe = tuple(map(sum, zip(start, self.directions[next_direction])))
-                if next_pipe == list(self.loop)[0]:
-                    del self.loop[start]
-                    self.loop[(type, start_direction)] = start_direction
-                    break
-
     def find_enclosed(self):
         enclosed = set()
         inside_loop = {}
@@ -79,7 +73,7 @@ class PipeLoop:
                         loop_direction = 'up'
                     elif self.loop[(i, j)][1] == 'down' or self.pipe_directions[self.loop[(i, j)]] == 'down':
                         loop_direction = 'down'
-                    # Get default direction
+                    # Get most outside loop's direction to check
                     if inside_loop == {}:
                         inside_loop = {loop_direction: True}
                 elif loop_direction in inside_loop:
