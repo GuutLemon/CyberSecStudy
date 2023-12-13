@@ -46,7 +46,7 @@ seeds2 = [(seeds[i], seeds[i] + seeds[i + 1]) for i in range(0, len(seeds), 2)]
 #     # print(rn)
 #     if i > len(properties) - 1:
 #         return min(rn)
-#       mapped = set()
+#     mapped = set()
 #     not_in_range = []
 #     for line in properties[i]:
 #         for r in line:
