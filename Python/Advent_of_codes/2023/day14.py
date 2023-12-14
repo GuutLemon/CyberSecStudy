@@ -8,12 +8,12 @@ grid = tuple([i for i in j] for j in read_data)
 
 def tilting(grid, d) -> tuple:
     if d in 'we':
-        line = range(len(grid))
+        lines = range(len(grid))
         values = range(len(grid[0]))
         if d == 'e':
             grid = tuple(i[::-1] for i in grid)
 
-        for i in line:
+        for i in lines:
             current_solid = (i, -1)
             for j in values:
                 if grid[i][j] == '#':
@@ -25,12 +25,12 @@ def tilting(grid, d) -> tuple:
                     current_solid = (di, dj)
 
     elif d in 'ns':
-        line = range(len(grid[0]))
+        lines = range(len(grid[0]))
         values = range(len(grid))
         if d == 's':
             grid = grid[::-1]
 
-        for j in line:
+        for j in lines:
             current_solid = (-1, j)
             for i in values:
                 if grid[i][j] == '#':
@@ -75,8 +75,8 @@ def omega_tilt(grid):
         i += 1
         s = str(grid)   # stop_dictionary_complaining_about_unhashable
         if not cycling and s in seen:
-            repeat_period = i - seen[s]     # How many step between first repeating a result
-            i = end - ((end - i) % repeat_period)   # Bring i to the start of the last cycle
+            repeat_period = i - seen[s]     # seen[s]: How many step between first repeating a result
+            i = end - ((end - seen[s]) % repeat_period)   # Bring i to the start of the last cycle
             cycling = True
         seen[s] = i
     return grid
