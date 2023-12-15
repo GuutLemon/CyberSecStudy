@@ -11,16 +11,16 @@ def tilting(grid, d) -> tuple:
         lines = range(len(grid))
         values = range(len(grid[0]))
         if d == 'e':
-            grid = tuple(i[::-1] for i in grid)
+            values = range(len(grid[0]) - 1, -1, -1)
 
         for i in lines:
-            current_solid = (i, -1)
+            current_solid = (i, -1 if d == 'w' else len(grid[0]))
             for j in values:
                 if grid[i][j] == '#':
                     current_solid = (i, j)
                 elif grid[i][j] == 'O':
                     grid[i][j] = '.'
-                    di, dj = (current_solid[0], current_solid[1] + 1)
+                    di, dj = (current_solid[0], current_solid[1] + 1*(d == 'w') - 1*(d == 'e'))
                     grid[di][dj] = 'O'
                     current_solid = (di, dj)
 
@@ -28,23 +28,18 @@ def tilting(grid, d) -> tuple:
         lines = range(len(grid[0]))
         values = range(len(grid))
         if d == 's':
-            grid = grid[::-1]
+            values = range(len(grid) - 1, -1, -1)
 
         for j in lines:
-            current_solid = (-1, j)
+            current_solid = (-1 if d == 'n' else len(grid), j)
             for i in values:
                 if grid[i][j] == '#':
                     current_solid = (i, j)
                 elif grid[i][j] == 'O':
                     grid[i][j] = '.'
-                    di, dj = (current_solid[0] + 1, current_solid[1])
+                    di, dj = (current_solid[0] + 1*(d == 'n') - 1*(d == 's'), current_solid[1])
                     grid[di][dj] = 'O'
                     current_solid = (di, dj)
-
-    if d == 'e':
-        grid = tuple(i[::-1] for i in grid)
-    elif d == 's':
-        grid = grid[::-1]
     return grid
 
 
@@ -57,8 +52,10 @@ def cal_load(grid):
     return weight
 
 # Part 1
-# grid_1 = tilting(grid, 'n')
-# print(cal_load(grid_1))
+grid_1 = [i[::] for i in grid]
+grid_1 = tilting(grid_1, 'n')
+print('Part 1:', cal_load(grid_1))
+# print(*grid, sep='\n')
 
 def mega_tilt(grid):
     for d in 'nwse':
@@ -82,4 +79,4 @@ def omega_tilt(grid):
     return grid
 
 grid = omega_tilt(grid)
-print(cal_load(grid))
+print('Part 2:', cal_load(grid))
