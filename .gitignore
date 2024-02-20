@@ -6,5 +6,5 @@ test.py
 
 # Ignore puzzle inputs
 *.txt
-
+*.html
 
