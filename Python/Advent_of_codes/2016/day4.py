@@ -1,9 +1,5 @@
 import re
 
-with open('day4.txt') as f:
-    encrypted = f.read().strip().split('\n')
-    encrypted = [re.split(r'(\d+)', _) for _ in encrypted]
-
 
 def check_id(rooms):
     id_sum = 0
@@ -45,6 +41,9 @@ def check_id(rooms):
 
 
 if __name__ == '__main__':
+    with open('day4.txt') as f:
+        encrypted = f.read().strip().split('\n')
+        encrypted = [re.split(r'(\d+)', _) for _ in encrypted]
     solve = check_id(encrypted)
     print('Part 1: ', solve[0])
     print('Part 2: ', solve[1])

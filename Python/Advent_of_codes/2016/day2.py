@@ -1,7 +1,3 @@
-with open('day2.txt') as f:
-    instructions = f.read().strip().split('\n')
-
-
 def find_code(instructions, part):
     directions = {'U': (-1, 0), 'D': (1, 0), 'R': (0, 1), 'L': (0, -1)}
     code = []
@@ -28,5 +24,7 @@ def find_code(instructions, part):
 
 
 if __name__ == '__main__':
+    with open('day2.txt') as f:
+        instructions = f.read().strip().split('\n')
     print('Part 1:', find_code(instructions, 1))
     print('Part 2:', find_code(instructions, 2))

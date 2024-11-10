@@ -1,9 +1,3 @@
-with open('day3.txt') as f:
-    triangles = f.read().strip().split('\n')
-    triangles = [_.split() for _ in triangles]
-    triangles = [[int(i) for i in j] for j in triangles]
-
-
 def count_valid(triangles, part):
     valid = 0
     if part == 2:
@@ -23,5 +17,9 @@ def count_valid(triangles, part):
 
 
 if __name__ == '__main__':
+    with open('day3.txt') as f:
+        triangles = f.read().strip().split('\n')
+        triangles = [_.split() for _ in triangles]
+        triangles = [[int(i) for i in j] for j in triangles]
     print('Part 1: ', count_valid(triangles, 1))
     print('Part 2: ', count_valid(triangles, 2))
