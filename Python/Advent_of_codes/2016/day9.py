@@ -44,7 +44,7 @@ def full_decom(input):
 
 if __name__ == '__main__':
     with open('day9.txt') as f:
-        data = f.read().strip().strip(' ')
+        data = f.read().strip()
 
     decom = decompress(data)
     print('Part 1: ', len(decom))
