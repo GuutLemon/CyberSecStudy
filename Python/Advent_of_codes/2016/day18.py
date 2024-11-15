@@ -23,16 +23,14 @@ class MapRoom:
         right_index = tile_index + 1
         if left_index < 0:
             left = '.'
-            middle = self.grid[-1][tile_index]
             right = self.grid[-1][right_index]
         elif right_index >= len(self.grid[-1]):
             left = self.grid[-1][left_index]
-            middle = self.grid[-1][tile_index]
             right = '.'
         else:
             left = self.grid[-1][left_index]
-            middle = self.grid[-1][tile_index]
             right = self.grid[-1][right_index]
+        middle = self.grid[-1][tile_index]
         checked_titles = left + middle + right
         if checked_titles in self.trap_conditions:
             return '^'
