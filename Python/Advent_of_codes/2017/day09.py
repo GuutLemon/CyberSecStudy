@@ -18,7 +18,7 @@ def scoring(inp):
             else:
                 garbage_content += 1
 
-        if not garbage:
+        elif not garbage:
             if c == '{':
                 depth += 1
             elif c == '}' and depth > 0:
