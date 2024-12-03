@@ -9,9 +9,9 @@ def solve1(lst_1, lst_2):
 
 def solve2(lst_1, lst_2):
     result = 0
-    l = len(lst_1)
-    for i in range(l):
-        result += lst_1[i] * lst_2.count(lst_1[i])
+    u_lst_1 = set(lst_1)
+    for num in u_lst_1:
+        result += num * lst_2.count(num) * lst_1.count(num)
     return result
 
 
