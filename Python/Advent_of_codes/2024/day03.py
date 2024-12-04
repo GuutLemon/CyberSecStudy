@@ -12,23 +12,19 @@ def solve_1(inp):
     return result
 
 def solve_2(inp):
-    result = 0
-    splitted_inp = []
+    valid_seq = ''
     do = True
     i = 0
     while i > -1:
         if do:
             found_indx = inp.find("don't()", i)
             do = False
-            splitted_inp.append(inp[i:found_indx])
-            i = found_indx
-        elif not do:
+            valid_seq += inp[i:found_indx]
+        else:
             found_indx = inp.find("do()", i)
             do = True
-            i = found_indx
-    for s in splitted_inp:
-        result += solve_1(s)
-    return result
+        i = found_indx
+    return solve_1(valid_seq)
 
 
 if __name__ == '__main__':
