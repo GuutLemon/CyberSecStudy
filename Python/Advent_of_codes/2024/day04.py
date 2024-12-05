@@ -20,24 +20,9 @@ def is_word(inp, word, first_char_indx):
 
 def is_word2(inp, word, mid_char_indx):
     word = set(word)
-    directions = {((1, 1), (-1, -1)), ((-1, 1), (1, -1))}
-    x, y = mid_char_indx[0], mid_char_indx[1]
-    to_check = []
-    for pair in directions:
-        chars = set('A')
-        for d in pair:
-            try:
-                i = x + d[0]
-                j = y + d[1]
-                if i < 0 or j < 0:
-                    break
-                chars.add(inp[i][j])
-            except IndexError:
-                break
-        to_check.append(chars)
-    if all(chars == word for chars in to_check):
-        return 1
-    return 0
+    i, j = mid_char_indx[0], mid_char_indx[1]
+    to_check = [{inp[i + 1][j + 1], inp[i - 1][j - 1], inp[i][j]}, {inp[i - 1][j + 1], inp[i + 1][j - 1], inp[i][j]}]
+    return all(chars == word for chars in to_check)
 
 
 def count_word(inp, word1='XMAS', word2='MAS'):
@@ -47,8 +32,8 @@ def count_word(inp, word1='XMAS', word2='MAS'):
         for j in range(len(inp[0])):
             if inp[i][j] == word1[0]:
                 count1 += is_word(inp, word1, (i, j))
-    for i in range(len(inp)):
-        for j in range(len(inp[0])):
+    for i in range(1, len(inp) - 1):
+        for j in range(1, len(inp[0]) - 1):
             if inp[i][j] == word2[1]:
                 count2 += is_word2(inp, word2, (i, j))
     return count1, count2
