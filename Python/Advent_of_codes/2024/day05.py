@@ -4,7 +4,7 @@ def is_ordered(rules, check, i):
     if check[i] not in rules or all(check[j] not in rules[check[i]] for j in range(i + 1, len(check))):
         return check
 
-def fix_order(rules, updates, corrects):
+def sort_order(rules, updates, corrects):
     fixed = []
     for u in updates:
         if u not in corrects:
@@ -23,7 +23,7 @@ def solve(rules, updates):
         check = u.copy()[::-1]
         if all(is_ordered(rules, check, page_indx) for page_indx in range(len(check))):
             corrects.append(u)
-    fixed = fix_order(rules, updates, corrects)
+    fixed = sort_order(rules, updates, corrects)
     return sum([c[len(c)//2] for c in corrects]), fixed
 
 
